@@ -144,7 +144,8 @@ object JobML {
 
     // create an Evaluator for binary classification, which expects two input columns: prediction
     // and label.
-    val evaluator = new BinaryClassificationEvaluator().setLabelCol("label")
+    val evaluator = new BinaryClassificationEvaluator().setLabelCol("label") //
+    // .setRawPredictionCol("prediction")
 
     // Evaluation of the accuracy - with hyper parameter tuning
     // Evaluates predictions and returns a scalar metric areaUnderROC(larger is better).
@@ -161,7 +162,7 @@ object JobML {
 
 
     // Saving model
-    val trainedModel = sc.parallelize(model, 10)
+    val trainedModel = model.write.overwrite.save(path + "model")
 
   }
 }
